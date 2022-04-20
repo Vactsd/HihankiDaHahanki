@@ -21,6 +21,9 @@ public class TextManager : MonoBehaviour
     static public bool startWomenAnswer=false;
     static public bool startMyMind3=false;
     static public bool DeleteDver=false;
+    static public bool ExitPaint=false;
+    static public bool Exit1Level=false;
+
 
 
 
@@ -66,15 +69,16 @@ public class TextManager : MonoBehaviour
 
     void Update()
     {
-        if(Painting.starttext)
+        if(Painting.starttext && !ExitPaint)
         {
             TextPanel.SetActive(true);
             Replica.text=MyMind1;
             Invoke("Deleting", 5);
             Painting.starttext=false;
             startMyMind2=true;
+            ExitPaint=true;
         }
-        if(Griaz.Startgriaz)
+        if(Griaz.Startgriaz && !Exit1Level)
         {
             TextPanel.SetActive(true);
             Replica.text=MyMind2;
@@ -83,13 +87,14 @@ public class TextManager : MonoBehaviour
             Griaz.Startgriaz=false;
             canPress=true;
         }
-        if(canPress && Input.GetKeyDown(KeyCode.E))
+        if(canPress && Input.GetKeyDown(KeyCode.E)&& !Exit1Level)
         {
             Spot.transform.position= new Vector3 (GGController.x, GGController.y, GGController.z) ;
             Spot.transform.position+= new Vector3 (0,0, -10) ;
             canPress=false;
             startTalkWithCleaner=true;
             Invoke("fd", 1.0f);
+            Exit1Level=true;
         }
 
         if(startTalkWithCleaner && uborshica.Uborshica && Input.GetKeyDown(KeyCode.E) )
@@ -97,7 +102,7 @@ public class TextManager : MonoBehaviour
             startTalkWithCleaner=false;
             Replica.text=TalkWithCleaner;
             //Invoke("fs", 4.0f);
-          //  Invoke("Deleting", 5);
+            Invoke("Deleting", 5);
             TextPanel.SetActive(true);
             startMyMind3=true;
         }
